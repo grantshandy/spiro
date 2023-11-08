@@ -44,13 +44,10 @@
         devShell = with pkgs;
           mkShell {
             buildInputs = [
-              cargo
-              rustc
-              rustfmt
+              rustup
               pre-commit
-              rustPackages.clippy
-              rust-analyzer
               xorg.libxcb
+              trunk
             ];
             RUST_SRC_PATH = rustPlatform.rustLibSrc;
             LD_LIBRARY_PATH = libPath;
