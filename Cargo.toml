@@ -6,12 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-argh = "0.1.12"
-eframe = "0.23.0"
-egui_plot = "0.23.0"
-fastrand = { version = "2.0.1", features = ["js"] }
-image = "0.24.7"
-log = "0.4.20"
+argh = "0.1"
+eframe = { version = "0.23", features = ["persistence"] }
+egui_plot = "0.23"
+fastrand = { version = "2.0", features = ["js"] }
+image = "0.24"
+log = "0.4"
+serde = { version = "1.0.192", features = ["derive"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen-futures = "0.4"

@@ -1,13 +1,14 @@
 use std::f64::consts::TAU;
 
 use eframe::{
-    egui::{self, CentralPanel, Grid, Layout, SidePanel, Slider},
+    egui::{self, CentralPanel, Grid, Layout, SidePanel, Slider, Visuals},
     emath::Align,
     epaint::Color32,
     CreationContext,
 };
 use egui_plot::{Legend, Line, Plot, PlotPoints};
 
+#[derive(serde::Deserialize, serde::Serialize)]
 pub struct Spiro {
     a: u32,
     b: u32,
@@ -17,16 +18,30 @@ pub struct Spiro {
     param_max: u32,
 }
 
-impl Spiro {
-    pub fn new(_cc: &CreationContext<'_>) -> Self {
-        let mut f = Self {
+impl Default for Spiro {
+    fn default() -> Self {
+        Self {
             a: 0,
             b: 0,
             c: 0,
             color: Color32::LIGHT_RED,
             width: 1.0,
             param_max: 20,
-        };
+        }
+    }
+}
+
+impl Spiro {
+    pub fn new(cc: &CreationContext<'_>) -> Self {
+        cc.egui_ctx.set_visuals(Visuals::dark());
+
+        if let Some(storage) = cc.storage {
+            if let Some(storage) = eframe::get_value(storage, eframe::APP_KEY) {
+                return storage;
+            }
+        }
+                
+        let mut f = Self::default();
         f.shuffle();
         f
     }
@@ -41,6 +56,10 @@ impl Spiro {
 }
 
 impl eframe::App for Spiro {
+    fn save(&mut self, storage: &mut dyn eframe::Storage) {
+        eframe::set_value(storage, eframe::APP_KEY, self);
+    }
+    
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         SidePanel::right("right_panel")
             .resizable(false)
