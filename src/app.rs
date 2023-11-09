@@ -9,6 +9,7 @@ use eframe::{
 use egui_plot::{Legend, Line, Plot, PlotPoints};
 
 #[derive(serde::Deserialize, serde::Serialize)]
+#[serde(default)]
 pub struct Spiro {
     a: u32,
     b: u32,
@@ -58,6 +59,7 @@ impl Spiro {
 impl eframe::App for Spiro {
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
         eframe::set_value(storage, eframe::APP_KEY, self);
+        log::error!("saving value!");
     }
     
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {

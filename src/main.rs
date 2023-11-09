@@ -4,6 +4,12 @@ use app::Spiro;
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
+    #[derive(argh::FromArgs)]
+    #[argh(description = "a cross platform toy app for creating spirograph images")]
+    struct Args {}
+
+    let _args: Args = argh::from_env();
+    
     eframe::run_native(
         "Sprio",
         eframe::NativeOptions::default(),
@@ -14,7 +20,6 @@ fn main() {
 
 #[cfg(target_arch = "wasm32")]
 fn main() {
-    // Redirect `log` message to `console.log` and friends:
     eframe::WebLogger::init(log::LevelFilter::Debug).ok();
 
     wasm_bindgen_futures::spawn_local(async {

@@ -49,6 +49,7 @@
               xorg.libxcb
               trunk
             ];
+            RUSTFLAGS = "--cfg=web_sys_unstable_apis";
             RUST_SRC_PATH = rustPlatform.rustLibSrc;
             LD_LIBRARY_PATH = libPath;
           };
